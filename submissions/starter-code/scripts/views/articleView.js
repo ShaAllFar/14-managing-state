@@ -13,6 +13,7 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  //this method declares two variables, template to compile the author filter, and options to store a function that will run through all of our authors and populate the author template with the 'author' value from each article; then it will check each author that it is about to append and will, unless the author at hand has already been appended.  That's how it handles the article filter, the method then handles the category filter, it effectually does the same thing, but it goes about it in a different style.  A style that readily makes more sense but is less 'eloquent'.
   articleView.populateFilters = function() {
     var options,
       template = Handlebars.compile($('#option-template').text());
@@ -38,6 +39,8 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  //This method will fix the url for whatever option is selected in a filter so the browser can read it, and we can send that link to someone else and they go to the exact same filtered results as opposed to just the home page with all of the results shown. It removes the '-filter' section of the category/author and replaces it with a space (' '), then searches for all spaces and adds a + sign.
+//this method is called via articleView.index, which is called from articleController.index which is called whenever we make a selection from a filter
   articleView.handleFilters = function() {
     $('#filters').one('change', 'select', function() {
       resource = this.id.replace('-filter', '');
@@ -118,6 +121,8 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  //This method will show only the articles section, all other sections will be hidden. It will dump all articles and loop throw all articles to append each of them to the dom. Then it populates the filters and throws a handler on the filters.  After that it hide all paragraphs after the second one so we can "Read On";
+  //This method gets called when we navigate to the "home" page ('/').
   articleView.index = function(articles) {
     $('#articles').show().siblings().hide();
 
@@ -127,7 +132,6 @@
     });
 
     articleView.populateFilters();
-    // COMMENT: What does this method do?  What is it's execution path?
     articleView.handleFilters();
 
     // DONE: Replace setTeasers with just the truncation logic, if needed:
